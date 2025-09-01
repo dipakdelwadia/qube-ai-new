@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query to SQL AI Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Syncfusion CSS -->
+    <link href="https://cdn.syncfusion.com/ej2/30.1.37/material.css" rel="stylesheet">
+    <link rel="stylesheet" href="chat-widget.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Demo page for AI Assistant</h1>
+
+    <!-- Chat Widget Container -->
+    <div class="ai-chat-widget-container">
+        <button id="ai-chat-widget-button" class="ai-chat-widget-button">Ask QubeAI</button>
+    </div>
+
+    <!-- Chat Window Structure -->
+    <div id="ai-chat-widget-window" class="ai-chat-widget-window">
+        <div class="ai-chat-widget-resizer" data-direction="n" style="top: 0; left: 5px; right: 5px; height: 5px; cursor: n-resize;"></div>
+        <div class="ai-chat-widget-resizer" data-direction="w" style="top: 5px; left: 0; bottom: 5px; width: 5px; cursor: w-resize;"></div>
+        <div class="ai-chat-widget-resizer" data-direction="nw" style="top: 0; left: 0; width: 16px; height: 16px; cursor: nw-resize;">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 8L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M1 4L4 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <div class="ai-chat-widget-header">
+            QubeAI
+            <button id="ai-chat-widget-close-button" style="position: absolute; top: 50%; right: 16px; transform: translateY(-50%); background: none; border: none; font-size: 1.25rem; color: white; cursor: pointer; padding: 0; line-height: 1;">&times;</button>
+        </div>
+        <div id="ai-chat-widget-messages" class="ai-chat-widget-messages">
+            <!-- An initial welcome message -->
+            <div class="ai-chat-widget-message-container ai">
+                <div class="ai-chat-widget-message ai">
+                    Welcome! How can I help you with your query today?
+                </div>
+                <div class="ai-chat-widget-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-robot" viewBox="0 0 16 16">
+                        <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a25 25 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"/>
+                        <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="ai-chat-widget-input-area">
+            <button id="ai-chat-widget-help-button" class="ai-chat-widget-help-button">
+                <i class="fas fa-info"></i>
+            </button>
+            <button id="ai-chat-widget-refresh-button" class="ai-chat-widget-refresh-button">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+            <input type="text" placeholder="Type your query here...">
+            <div class="ai-chat-widget-chart-dropdown" id="ai-chat-widget-chart-dropdown">
+                <button id="ai-chat-widget-chart-dropdown-btn" title="Chart options" class="ai-chat-widget-chart-dropdown-btn">
+                    <i class="fas fa-bolt"></i>
+                    <span>Action</span>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </button>
+                <div class="ai-chat-widget-chart-dropdown-menu" id="ai-chat-widget-chart-dropdown-menu">
+                    <div class="ai-chat-widget-chart-dropdown-item" data-action="toggle-visualization">
+                        <span>Show chart visualization</span>
+                    </div>
+                    <div class="ai-chat-widget-chart-dropdown-item" data-action="export-data">
+                        <span>Export data</span>
+                    </div>
+                    <div class="ai-chat-widget-chart-dropdown-item" data-action="chart-settings">
+                        <span>Chart settings</span>
+                    </div>
+                </div>
+            </div>
+            <button id="ai-chat-widget-send-button">Send</button>
+        </div>
+    </div>
+    <!-- Add Syncfusion JavaScript libraries -->
+    <script src="https://cdn.syncfusion.com/ej2/30.1.37/dist/ej2.min.js"></script>
+    <!-- Configuration file -->
+    <script src="config.js"></script>
+    <script src="chat-widget.js"></script>
+</body>
+</html> 

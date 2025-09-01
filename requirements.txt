@@ -1,0 +1,17 @@
+streamlit
+google-generativeai
+python-dotenv
+pandas
+sqlparse
+SQLAlchemy
+mcp>=1.0.0
+pymssql>=2.2.7
+pyodbc>=5.2.0
+urllib3>=1.26.15
+openai>=1.5.0
+fastapi
+uvicorn[standard]
+gunicorn
+pydantic
+psycopg2-binary
+requests

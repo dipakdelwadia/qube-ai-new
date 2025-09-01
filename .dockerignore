@@ -1,0 +1,18 @@
+# Exclude Python virtual environment
+.venv/
+__pycache__/
+
+# Exclude Git directory
+.git/
+.gitignore
+
+# Exclude Docker files
+Dockerfile
+.dockerignore
+
+# Exclude editor and OS files
+.vscode/
+.idea/
+.DS_Store
+*.pyc
+*.swp 
